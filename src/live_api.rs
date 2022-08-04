@@ -1,5 +1,16 @@
 //! Live VATSIM APIs.
 //!
+//! These functions are [async], as they deal with HTTP requests. You'll need
+//! to use an async runtime like [tokio] to run them.
+//!
+//! See the [struct] docs for usage information.
+//!
+//! [async]: https://doc.rust-lang.org/std/keyword.async.html
+//! [tokio]: https://docs.rs/tokio/latest/tokio/
+//! [struct]: Vatsim
+//!
+//! # Example
+//!
 //! ```rust,no_run
 //! use vatsim_utils::live_api::Vatsim;
 //! # async fn _do() {
@@ -7,6 +18,7 @@
 //! // use `api` ...
 //! # }
 //! ```
+
 use crate::{
     errors::VatsimUtilError,
     models::{RatingsData, Status, StatusData, TransceiverResponseEntry, V3ResponseData},
@@ -19,9 +31,9 @@ use reqwest::{Client, ClientBuilder};
 const STATUS_URL: &str = "https://status.vatsim.net/status.json";
 
 /// Struct containing access to the VATSIM live APIs - those
-/// listed on [this VATSIM Developer Info wiki page].
+/// listed on the [VATSIM Developer Info wiki page].
 ///
-/// [this VATSIM Developer Info wiki page]: https://github.com/vatsimnetwork/developer-info/wiki/Data-Feeds
+/// [VATSIM Developer Info wiki page]: https://github.com/vatsimnetwork/developer-info/wiki/Data-Feeds
 #[derive(Debug)]
 pub struct Vatsim {
     client: Client,
@@ -30,15 +42,17 @@ pub struct Vatsim {
 }
 
 impl Vatsim {
-    /// New API struct instance.
+    /// Create a new API struct instance.
     ///
-    /// Makes the API call to the status endpoint to get the endpoint
-    /// to make V3 API calls.
+    /// Internally, this function also makes the API call to the status
+    /// endpoint to get the endpoint to make later API calls, which
+    /// is why this function is also `async`.
     ///
     /// # Example
     ///
     /// ```rust,no_run
     /// use vatsim_utils::live_api::Vatsim;
+    ///
     /// # async fn _do() {
     /// let api = Vatsim::new().await.unwrap();
     /// # }
@@ -96,9 +110,11 @@ impl Vatsim {
     ///
     /// ```rust,no_run
     /// use vatsim_utils::live_api::Vatsim;
+    ///
     /// # async fn _do() {
     /// let api = Vatsim::new().await.unwrap();
     /// let data = api.get_v3_data().await.unwrap();
+    /// // use data ...
     /// # }
     /// ```
     ///
@@ -133,9 +149,11 @@ impl Vatsim {
     ///
     /// ```rust,no_run
     /// use vatsim_utils::live_api::Vatsim;
+    ///
     /// # async fn _do() {
     /// let api = Vatsim::new().await.unwrap();
     /// let data = api.get_transceivers_data().await.unwrap();
+    /// // use data ...
     /// # }
     /// ```
     ///
@@ -164,6 +182,7 @@ impl Vatsim {
     ///
     /// ```rust,no_run
     /// use vatsim_utils::live_api::Vatsim;
+    ///
     /// # async fn _do() {
     /// let api = Vatsim::new().await.unwrap();
     /// let times = api.get_ratings_times(1234567890).await.unwrap();

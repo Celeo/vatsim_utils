@@ -5,7 +5,7 @@
 //! No docstrings are provided for these models, as they're
 //! exclusively intended to be returned by this crate's public
 //! functions, and the fields match exactly (except where
-//! renamed via `serde`) those that come from the APIs.
+//! renamed via [serde] in [`TransceiverEntry`]) those that come from the APIs.
 
 #![allow(missing_docs)]
 
@@ -167,6 +167,6 @@ pub struct TransceiverEntry {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct TransceiverResponseEntry {
-    callsign: String,
-    transceivers: Vec<TransceiverEntry>,
+    pub callsign: String,
+    pub transceivers: Vec<TransceiverEntry>,
 }

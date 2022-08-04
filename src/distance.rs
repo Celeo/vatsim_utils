@@ -1,4 +1,11 @@
-//! Utilities for distance calculations and determinations.
+//! Utilities for distance calculations.
+//!
+//! This module includes a long list of airport identifiers and lat/long
+//! values. The included [haversine] function can be used to get
+//! the distance between two points' lat/long, wether those points
+//! be airports, pilots via the [`get_v3_data`] function, or a combination.
+//!
+//! [`get_v3_data`]: crate::live_api::Vatsim::get_v3_data
 
 use once_cell::sync::Lazy;
 use std::f64::consts::PI;
@@ -22,10 +29,16 @@ pub struct Airport {
 
 /// List of included airport identifiers and locations.
 ///
+/// For the entire list, view the [`airport_data.csv`] file
+/// in the repo.
+///
+/// [`airport_data.csv`]: https://github.com/Celeo/vatsim_utils/blob/master/src/airport_data.csv
+///
 /// # Example
 ///
 /// ```rust
 /// use vatsim_utils::distance::AIRPORTS;
+///
 /// println!("{}", AIRPORTS.get(0).unwrap().identifier);
 /// ```
 pub static AIRPORTS: Lazy<Vec<Airport>> = Lazy::new(|| {
@@ -47,11 +60,28 @@ pub static AIRPORTS: Lazy<Vec<Airport>> = Lazy::new(|| {
 ///
 /// Originally from <https://www.movable-type.co.uk/scripts/latlong.html>.
 ///
-/// # Example
+/// # Examples
+///
+/// With hardcoded values:
 ///
 /// ```rust
 /// use vatsim_utils::distance::haversine;
+///
 /// let distance = haversine(32.7338, -117.1933, 33.9416, -118.4085);
+///
+/// assert_eq!(distance.round() as i64, 95);
+/// ```
+///
+/// Using lookups:
+///
+/// ```rust
+/// use vatsim_utils::distance::{AIRPORTS, haversine};
+///
+/// let ksan = AIRPORTS.iter().find(|airport| airport.identifier == "KSAN").unwrap();
+/// let klax = AIRPORTS.iter().find(|airport| airport.identifier == "KLAX").unwrap();
+/// let distance = haversine(ksan.latitude, ksan.longitude, klax.latitude, klax.longitude);
+///
+/// assert_eq!(distance.round() as i64, 95);
 /// ```
 #[must_use]
 pub fn haversine(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
