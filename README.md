@@ -5,7 +5,7 @@
 [![Docs.rs](https://docs.rs/vatsim_utils/badge.svg)](https://docs.rs/vatsim_utils)
 [![License](https://img.shields.io/crates/l/vatsim_utils)](https://github.com/Celeo/vatsim_utils/blob/master/Cargo.toml#L10)
 
-Utilities to interact with VATSIM data
+Utilities to interact with VATSIM data.
 
 ## Installing
 
@@ -38,6 +38,8 @@ Licensed under either of
 
 * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE))
 * MIT license ([LICENSE-MIT](LICENSE-MIT))
+
+Airport data from <https://www.partow.net/miscellaneous/airportdatabase/>.
 
 ## Contributing
 
