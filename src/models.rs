@@ -308,5 +308,8 @@ pub struct Region {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Facility {
-    //
+    pub id: String,
+    pub start: String,
+    pub callsign: String,
+    pub rating: i8,
 }
