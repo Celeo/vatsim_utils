@@ -2,8 +2,9 @@
 //!
 //! No docstrings are provided for these models, as they're
 //! exclusively intended to be returned by this crate's public
-//! functions, and the fields match exactly (except where
-//! renamed via [serde] in [`TransceiverEntry`]) those that come from the APIs.
+//! functions and the fields match those that come from the APIs,
+//! except when underlines are included to improve field
+//! readability and adhere to Rust's styling guidelines.
 
 #![allow(missing_docs)]
 
@@ -144,12 +145,6 @@ pub struct V3ResponseData {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct RatingsData {
-    pub pilot: f64,
-    pub atc: f64,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct TransceiverEntry {
     pub id: u16,
     pub frequency: u64,
@@ -167,4 +162,110 @@ pub struct TransceiverEntry {
 pub struct TransceiverResponseEntry {
     pub callsign: String,
     pub transceivers: Vec<TransceiverEntry>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct UserRatingsSimple {
+    id: String,
+    rating: i8,
+    pilot_rating: i8,
+    susp_date: Option<String>,
+    reg_date: String,
+    region: String,
+    division: String,
+    subdivision: String,
+    #[serde(rename = "lastratingchange")]
+    last_rating_change: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct RatingsTimeData {
+    pub id: f64,
+    pub atc: f64,
+    pub pilot: f64,
+    pub s1: f64,
+    pub s2: f64,
+    pub s3: f64,
+    pub c1: f64,
+    pub c2: f64,
+    pub c3: f64,
+    pub i1: f64,
+    pub i2: f64,
+    pub i3: f64,
+    pub sup: f64,
+    pub adm: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ConnectionEntry {
+    id: u64,
+    vatsim_id: String,
+    #[serde(rename = "type")]
+    connection_type: u16,
+    rating: i8,
+    callsign: String,
+    start: String,
+    end: Option<String>,
+    server: String,
+}
+
+/// A paginated response wrapper. Includes a count of items,
+/// potential links to next/previous pages, and a list of results.
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct PaginatedResponse<T> {
+    count: u64,
+    next: Option<String>,
+    previous: Option<String>,
+    results: Vec<T>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct AtcSessionEntry {
+    connection_id: u64,
+    start: String,
+    end: String,
+    server: String,
+    vatsim_id: String,
+    #[serde(rename = "type")]
+    session_type: u16,
+    rating: i8,
+    callsign: String,
+    minutes_on_callsign: String,
+    total_minutes_on_callsign: f64,
+    total_aircraft_tracked: u64,
+    total_aircraft_seen: u64,
+    total_flights_amended: u64,
+    total_handoffs_initiated: u64,
+    total_handoffs_received: u64,
+    total_handoffs_refused: u64,
+    total_squawks_assigned: u64,
+    total_cruisealts_modified: u64,
+    total_tempalts_modified: u64,
+    #[serde(rename = "total_scratchpadmods")]
+    total_scratchpad_mods: u64,
+    #[serde(rename = "aircrafttracked")]
+    aircraft_tracked: u64,
+    #[serde(rename = "aircraftseen")]
+    aircraft_seen: u64,
+    #[serde(rename = "flightsamended")]
+    flights_amended: u64,
+    #[serde(rename = "handoffsinitiated")]
+    handoffs_initiated: u64,
+    #[serde(rename = "handoffsreceived")]
+    handoffs_received: u64,
+    #[serde(rename = "handoffsrefused")]
+    handoffs_refused: u64,
+    #[serde(rename = "squawksassigned")]
+    squawks_assigned: u64,
+    #[serde(rename = "cruisealtsmodified")]
+    cruise_alts_modified: u64,
+    #[serde(rename = "tempaltsmodified")]
+    temp_alts_modified: u64,
+    #[serde(rename = "scratchpadmods")]
+    scratchpad_mods: u64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct RestFlightPlans {
+    //
 }

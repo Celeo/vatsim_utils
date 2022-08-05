@@ -13,6 +13,7 @@
 //!
 //! ```rust,no_run
 //! use vatsim_utils::live_api::Vatsim;
+//!
 //! # async fn _do() {
 //! let api = Vatsim::new().await.unwrap();
 //! // use `api` ...
@@ -21,7 +22,7 @@
 
 use crate::{
     errors::VatsimUtilError,
-    models::{RatingsData, Status, StatusData, TransceiverResponseEntry, V3ResponseData},
+    models::{Status, StatusData, TransceiverResponseEntry, V3ResponseData},
 };
 use log::debug;
 use rand::seq::SliceRandom;
@@ -167,42 +168,6 @@ impl Vatsim {
     ) -> Result<Vec<TransceiverResponseEntry>, VatsimUtilError> {
         debug!("Getting current transceivers data");
         let response = self.client.get(&self.transceivers_url).send().await?;
-        if !response.status().is_success() {
-            return Err(VatsimUtilError::InvalidStatusCode(
-                response.status().as_u16(),
-            ));
-        }
-        let data = response.json().await?;
-        Ok(data)
-    }
-
-    /// Get the amount of time the user has spent as various positions on the network.
-    ///
-    /// # Example
-    ///
-    /// ```rust,no_run
-    /// use vatsim_utils::live_api::Vatsim;
-    ///
-    /// # async fn _do() {
-    /// let api = Vatsim::new().await.unwrap();
-    /// let times = api.get_ratings_times(1234567890).await.unwrap();
-    /// # }
-    /// ```
-    ///
-    /// # Errors
-    ///
-    /// This function can fail if the HTTP request fails or if the returned
-    /// data does not match the schemas of the models passed to the
-    /// deserializer.
-    pub async fn get_ratings_times(&self, cid: u64) -> Result<RatingsData, VatsimUtilError> {
-        let response = self
-            .client
-            .get(format!(
-                "https://api.vatsim.net/api/ratings/{}/rating_times",
-                cid
-            ))
-            .send()
-            .await?;
         if !response.status().is_success() {
             return Err(VatsimUtilError::InvalidStatusCode(
                 response.status().as_u16(),

@@ -20,3 +20,4 @@ pub mod distance;
 pub mod errors;
 pub mod live_api;
 pub mod models;
+pub mod rest_api;
