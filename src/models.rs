@@ -198,74 +198,115 @@ pub struct RatingsTimeData {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ConnectionEntry {
-    id: u64,
-    vatsim_id: String,
+    pub id: u64,
+    pub vatsim_id: String,
     #[serde(rename = "type")]
-    connection_type: u16,
-    rating: i8,
-    callsign: String,
-    start: String,
-    end: Option<String>,
-    server: String,
+    pub connection_type: u16,
+    pub rating: i8,
+    pub callsign: String,
+    pub start: String,
+    pub end: Option<String>,
+    pub server: String,
 }
 
 /// A paginated response wrapper. Includes a count of items,
 /// potential links to next/previous pages, and a list of results.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct PaginatedResponse<T> {
-    count: u64,
-    next: Option<String>,
-    previous: Option<String>,
-    results: Vec<T>,
+    pub count: u64,
+    pub next: Option<String>,
+    pub previous: Option<String>,
+    pub results: Vec<T>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AtcSessionEntry {
-    connection_id: u64,
-    start: String,
-    end: String,
-    server: String,
-    vatsim_id: String,
+    pub connection_id: u64,
+    pub start: String,
+    pub end: String,
+    pub server: String,
+    pub vatsim_id: String,
     #[serde(rename = "type")]
-    session_type: u16,
-    rating: i8,
-    callsign: String,
-    minutes_on_callsign: String,
-    total_minutes_on_callsign: f64,
-    total_aircraft_tracked: u64,
-    total_aircraft_seen: u64,
-    total_flights_amended: u64,
-    total_handoffs_initiated: u64,
-    total_handoffs_received: u64,
-    total_handoffs_refused: u64,
-    total_squawks_assigned: u64,
-    total_cruisealts_modified: u64,
-    total_tempalts_modified: u64,
+    pub session_type: u16,
+    pub rating: i8,
+    pub callsign: String,
+    pub minutes_on_callsign: String,
+    pub total_minutes_on_callsign: f64,
+    pub total_aircraft_tracked: u64,
+    pub total_aircraft_seen: u64,
+    pub total_flights_amended: u64,
+    pub total_handoffs_initiated: u64,
+    pub total_handoffs_received: u64,
+    pub total_handoffs_refused: u64,
+    pub total_squawks_assigned: u64,
+    pub total_cruisealts_modified: u64,
+    pub total_tempalts_modified: u64,
     #[serde(rename = "total_scratchpadmods")]
-    total_scratchpad_mods: u64,
+    pub total_scratchpad_mods: u64,
     #[serde(rename = "aircrafttracked")]
-    aircraft_tracked: u64,
+    pub aircraft_tracked: u64,
     #[serde(rename = "aircraftseen")]
-    aircraft_seen: u64,
+    pub aircraft_seen: u64,
     #[serde(rename = "flightsamended")]
-    flights_amended: u64,
+    pub flights_amended: u64,
     #[serde(rename = "handoffsinitiated")]
-    handoffs_initiated: u64,
+    pub handoffs_initiated: u64,
     #[serde(rename = "handoffsreceived")]
-    handoffs_received: u64,
+    pub handoffs_received: u64,
     #[serde(rename = "handoffsrefused")]
-    handoffs_refused: u64,
+    pub handoffs_refused: u64,
     #[serde(rename = "squawksassigned")]
-    squawks_assigned: u64,
+    pub squawks_assigned: u64,
     #[serde(rename = "cruisealtsmodified")]
-    cruise_alts_modified: u64,
+    pub cruise_alts_modified: u64,
     #[serde(rename = "tempaltsmodified")]
-    temp_alts_modified: u64,
+    pub temp_alts_modified: u64,
     #[serde(rename = "scratchpadmods")]
-    scratchpad_mods: u64,
+    pub scratchpad_mods: u64,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct RestFlightPlans {
+    pub id: u64,
+    pub connection_id: u64,
+    pub vatsim_id: String,
+    pub flight_type: String,
+    pub callsign: String,
+    pub aircraft: String,
+    #[serde(rename = "cruisespeed")]
+    pub cruise_speed: String,
+    pub dep: String,
+    pub arr: String,
+    pub alt: String,
+    pub altitude: String,
+    pub rmks: String,
+    pub route: String,
+    pub deptime: String,
+    #[serde(rename = "hrsenroute")]
+    pub hrs_enroute: u64,
+    #[serde(rename = "minenroute")]
+    pub min_enroute: u64,
+    #[serde(rename = "hrsfuel")]
+    pub hrs_fuel: u64,
+    #[serde(rename = "minsfuel")]
+    pub min_sfuel: u8,
+    pub filed: String,
+    #[serde(rename = "assignedsquawk")]
+    pub assigned_squawk: String,
+    #[serde(rename = "modifiedbycid")]
+    pub modified_by_cid: String,
+    #[serde(rename = "modifiedbycallsign")]
+    pub modified_by_callsign: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Region {
+    pub id: String,
+    pub name: String,
+    pub director: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Facility {
     //
 }

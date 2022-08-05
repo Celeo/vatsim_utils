@@ -10,8 +10,8 @@
 use crate::{
     errors::VatsimUtilError,
     models::{
-        AtcSessionEntry, ConnectionEntry, PaginatedResponse, RatingsTimeData, RestFlightPlans,
-        UserRatingsSimple,
+        AtcSessionEntry, ConnectionEntry, Facility, PaginatedResponse, RatingsTimeData, Region,
+        RestFlightPlans, UserRatingsSimple,
     },
 };
 use once_cell::sync::Lazy;
@@ -190,8 +190,8 @@ pub async fn get_atc_sessions(
     date: Option<&str>,
 ) -> Result<PaginatedResponse<AtcSessionEntry>, VatsimUtilError> {
     let mut url = format!("https://api.vatsim.net/api/ratings/{}/atcsessions/", cid);
-    if let Some(p) = specifier {
-        url += p;
+    if let Some(spec) = specifier {
+        url += spec;
     }
     let mut req = CLIENT.request(Method::GET, url);
     if let Some(p) = page {
@@ -241,7 +241,7 @@ pub async fn get_flight_plans(
     cid: u64,
     page: Option<u64>,
 ) -> Result<PaginatedResponse<RestFlightPlans>, VatsimUtilError> {
-    let mut url = format!("https://api.vatsim.net/api/ratings/{}/connections", cid);
+    let mut url = format!("https://api.vatsim.net/api/ratings/{}/flight_plans", cid);
     if let Some(p) = page {
         url += &format!("?page={}", p);
     }
@@ -255,10 +255,121 @@ pub async fn get_flight_plans(
     Ok(data)
 }
 
-/*
-    https://api.vatsim.net/api/ratings/$CID/flight_plans/
-    https://api.vatsim.net/api/regions/
-    https://api.vatsim.net/api/facilities/
-    https://api.vatsim.net/api/facilities/$SPECIFIER
-    https://api.vatsim.net/api/facilities/$SPECIFIER?start=&date=
-*/
+/// Get the VATSIM regions.
+///
+/// # Example
+///
+/// ```rust,no_run
+/// use vatsim_utils::rest_api::get_regions;
+///
+/// # async fn _do() {
+/// let regions = get_regions().await.unwrap();
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// This function can fail if the HTTP request fails or if the returned
+/// data does not match the schemas of the models passed to the
+/// deserializer.
+pub async fn get_regions() -> Result<Vec<Region>, VatsimUtilError> {
+    let response = CLIENT
+        .get("https://api.vatsim.net/api/regions/")
+        .send()
+        .await?;
+    if !response.status().is_success() {
+        return Err(VatsimUtilError::InvalidStatusCode(
+            response.status().as_u16(),
+        ));
+    }
+    let data = response.json().await?;
+    Ok(data)
+}
+
+/// Get facilities currently staffed by ATC.
+///
+/// # Example
+///
+/// ```rust,no_run
+/// use vatsim_utils::rest_api::get_online_facilities;
+///
+/// # async fn _do() {
+/// let facilities = get_online_facilities().await.unwrap();
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// This function can fail if the HTTP request fails or if the returned
+/// data does not match the schemas of the models passed to the
+/// deserializer.
+pub async fn get_online_facilities() -> Result<Vec<Facility>, VatsimUtilError> {
+    let response = CLIENT
+        .get("https://api.vatsim.net/api/facilities/")
+        .send()
+        .await?;
+    if !response.status().is_success() {
+        return Err(VatsimUtilError::InvalidStatusCode(
+            response.status().as_u16(),
+        ));
+    }
+    let data = response.json().await?;
+    Ok(data)
+}
+
+/// Get a facility's historical staffing data.
+///
+/// A page number and start and end dates are optional.
+///
+/// # Example
+///
+/// ```rust,no_run
+/// use vatsim_utils::rest_api::get_facility_history;
+///
+/// # async fn _do() {
+/// let connections = get_facility_history("SAN_TWR", None, None, None).await.unwrap();
+/// // or ...
+/// let connections = get_facility_history(
+///     "SAN_TWR",
+///     Some(2),
+///     Some("2022-02-01"),
+///     None
+/// )
+/// .await
+/// .unwrap();
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// This function can fail if the HTTP request fails or if the returned
+/// data does not match the schemas of the models passed to the
+/// deserializer.
+pub async fn get_facility_history(
+    specifier: &str,
+    page: Option<u64>,
+    start: Option<&str>,
+    date: Option<&str>,
+) -> Result<PaginatedResponse<AtcSessionEntry>, VatsimUtilError> {
+    let mut req = CLIENT.request(
+        Method::GET,
+        format!("https://api.vatsim.net/api/facilities/{}", specifier),
+    );
+    if let Some(p) = page {
+        req = req.query(&[("page", p.to_string().as_str())]);
+    }
+    if let Some(s) = start {
+        req = req.query(&[("start", s)]);
+    }
+    if let Some(d) = date {
+        req = req.query(&[("date", d)]);
+    }
+    let response = req.send().await?;
+    if !response.status().is_success() {
+        return Err(VatsimUtilError::InvalidStatusCode(
+            response.status().as_u16(),
+        ));
+    }
+    let response_data = response.json().await?;
+    Ok(response_data)
+}
