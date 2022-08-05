@@ -7,6 +7,8 @@
 
 Utilities to interact with VATSIM data.
 
+This library is not endorsed by VATSIM, VATUSA, or ZLA.
+
 ## Installing
 
 Add the latest version to your `Cargo.toml`.
