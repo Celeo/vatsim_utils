@@ -244,7 +244,7 @@ pub async fn get_flight_plans(
 ) -> Result<PaginatedResponse<RestFlightPlans>, VatsimUtilError> {
     let mut url = format!("https://api.vatsim.net/api/ratings/{}/flight_plans", cid);
     if let Some(p) = page {
-        url += &format!("?page={}", p);
+        let _ = write!(url, "?page={}", p);
     }
     let response = CLIENT.get(url).send().await?;
     if !response.status().is_success() {
