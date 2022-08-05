@@ -1,6 +1,4 @@
-//! JSON API models.
-//!
-//! Used for deserializing data from the various HTTP APIs.
+//! JSON API models for deserializing data from the various HTTP APIs.
 //!
 //! No docstrings are provided for these models, as they're
 //! exclusively intended to be returned by this crate's public

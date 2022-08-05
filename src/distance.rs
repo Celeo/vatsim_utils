@@ -1,4 +1,4 @@
-//! Utilities for distance calculations.
+//! Utilities for distance calculations and airport locations.
 //!
 //! This module includes a long list of airport identifiers and lat/long
 //! values. The included [haversine] function can be used to get

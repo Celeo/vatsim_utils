@@ -1,4 +1,4 @@
-//! Live VATSIM APIs.
+//! Wrapper for the VATSIM APIs to get live data from the servers.
 //!
 //! These functions are [async], as they deal with HTTP requests. You'll need
 //! to use an async runtime like [tokio] to run them.

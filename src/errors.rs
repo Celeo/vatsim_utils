@@ -1,4 +1,4 @@
-//! Errors the crate can return.
+//! Errors the crate can return for various reasons.
 //!
 //! Most commonly involved with HTTP API access issues.
 
