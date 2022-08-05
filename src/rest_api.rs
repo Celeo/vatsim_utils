@@ -16,6 +16,7 @@ use crate::{
 };
 use once_cell::sync::Lazy;
 use reqwest::{Client, ClientBuilder, Method};
+use std::fmt::Write;
 
 /// HTTP client.
 static CLIENT: Lazy<Client> = Lazy::new(|| {
@@ -136,7 +137,7 @@ pub async fn get_connections(
 ) -> Result<PaginatedResponse<ConnectionEntry>, VatsimUtilError> {
     let mut url = format!("https://api.vatsim.net/api/ratings/{}/connections", cid);
     if let Some(p) = page {
-        url += &format!("?page={}", p);
+        let _ = write!(url, "?page={}", p);
     }
     let response = CLIENT.get(url).send().await?;
     if !response.status().is_success() {
