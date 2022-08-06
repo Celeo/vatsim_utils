@@ -48,7 +48,7 @@ pub struct FlightPlan {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Pilot {
-    pub cid: i64,
+    pub cid: u64,
     pub name: String,
     pub callsign: String,
     pub server: String,
@@ -68,7 +68,7 @@ pub struct Pilot {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Controller {
-    pub cid: i64,
+    pub cid: u64,
     pub name: String,
     pub callsign: String,
     pub frequency: String,
