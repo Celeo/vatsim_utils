@@ -1,14 +1,16 @@
 //! Utilities for distance calculations and airport locations.
 //!
-//! This module includes a long list of airport identifiers and lat/long
-//! values. The included [haversine] function can be used to get
+//! This module includes a long collection of airport identifiers and lat/long
+//! values, available in a list [`AIRPORTS`] and `HashMap` [`AIRPORTS_MAP`].
+//!
+//! The included [haversine] function can be used to get
 //! the distance between two points' lat/long, wether those points
 //! be airports, pilots via the [`get_v3_data`] function, or a combination.
 //!
 //! [`get_v3_data`]: crate::live_api::Vatsim::get_v3_data
 
 use once_cell::sync::Lazy;
-use std::f64::consts::PI;
+use std::{collections::HashMap, f64::consts::PI};
 
 /// Raw airport data from the CSV file.
 const AIRPORT_DATA: &str = include_str!("airport_data.csv");
@@ -54,6 +56,37 @@ pub static AIRPORTS: Lazy<Vec<Airport>> = Lazy::new(|| {
             }
         })
         .collect()
+});
+
+/// Map of included airport identifiers and locations.
+///
+/// For the entire list, view the [`airport_data.csv`] file
+/// in the repo.
+///
+/// [`airport_data.csv`]: https://github.com/Celeo/vatsim_utils/blob/master/src/airport_data.csv
+///
+/// # Example
+///
+/// ```rust
+/// use vatsim_utils::distance::AIRPORTS_MAP;
+///
+/// println!("{}", AIRPORTS_MAP.get("KSAN").unwrap().identifier);
+/// ```
+pub static AIRPORTS_MAP: Lazy<HashMap<&'static str, Airport>> = Lazy::new(|| {
+    let mut m = HashMap::new();
+    AIRPORT_DATA
+        .split('\n')
+        .filter(|line| !line.is_empty())
+        .for_each(|line| {
+            let parts: Vec<_> = line.split(',').collect();
+            let airport = Airport {
+                identifier: parts.first().unwrap(),
+                latitude: parts.get(1).unwrap().parse().unwrap(),
+                longitude: parts.get(2).unwrap().parse().unwrap(),
+            };
+            let _ = m.insert(*parts.first().unwrap(), airport);
+        });
+    m
 });
 
 /// Calculate the Haversine Distance between two (lat & long) points.
