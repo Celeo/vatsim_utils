@@ -102,7 +102,7 @@ pub struct Atis {
     pub server: String,
     pub visual_range: u16,
     pub atis_code: Option<String>,
-    pub text_atis: Vec<String>,
+    pub text_atis: Option<Vec<String>>,
     pub last_updated: String,
     pub logon_time: String,
 }
