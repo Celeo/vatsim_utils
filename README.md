@@ -5,7 +5,12 @@
 [![Docs.rs](https://docs.rs/vatsim_utils/badge.svg)](https://docs.rs/vatsim_utils)
 [![License](https://img.shields.io/crates/l/vatsim_utils)](https://github.com/Celeo/vatsim_utils/blob/master/Cargo.toml#L10)
 
-Utilities to interact with VATSIM data.
+Utilities to interact with VATSIM data, covering:
+
+- The live data from <https://data.vatsim.net/v3>
+- API from <https://api.vatsim.net>
+- Several thousand airport decimal latitude/longitude coordinations
+- Various utility functions
 
 This library is not endorsed by VATSIM, VATUSA, or ZLA.
 
