@@ -1,7 +1,8 @@
-default: test
+default: verify
 
-test:
+verify:
   @cargo t
+  @cargo +nightly clippy
 
 doc-build:
   @cargo doc --no-deps
