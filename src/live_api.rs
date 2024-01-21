@@ -64,6 +64,11 @@ impl Vatsim {
     /// This function can fail if the HTTP requests to the VATSIM API status
     /// endpoint fail, as this endpoint is required in order to get and
     /// store URLs to later query for getting data.
+    ///
+    /// # Panics
+    ///
+    /// Will panic if the HTTP user agent cannot be constructed, which
+    /// should never happen.
     pub async fn new() -> Result<Self, VatsimUtilError> {
         debug!("Creating VATSIM struct instance");
         let client = ClientBuilder::new()
@@ -98,7 +103,7 @@ impl Vatsim {
             .choose(&mut rand::thread_rng())
             .expect("No VATSIM transceivers API URLs returned")
             .clone();
-        debug!("V3 URL: {}, transceiver URL: {}", v3_url, transceivers_url);
+        debug!("V3 URL: {v3_url}, transceiver URL: {transceivers_url}");
         Ok((v3_url, transceivers_url))
     }
 

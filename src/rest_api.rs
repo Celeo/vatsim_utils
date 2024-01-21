@@ -42,7 +42,7 @@ static CLIENT: Lazy<Client> = Lazy::new(|| {
 /// ```
 #[must_use]
 pub fn stats_url(cid: u64) -> String {
-    format!("https://stats.vatsim.net/stats/{}", cid)
+    format!("https://stats.vatsim.net/stats/{cid}")
 }
 
 /// Get a simple view of a user's ratings on the network.
@@ -64,7 +64,7 @@ pub fn stats_url(cid: u64) -> String {
 /// deserializer.
 pub async fn user_ratings(cid: u64) -> Result<UserRatingsSimple, VatsimUtilError> {
     let response = CLIENT
-        .get(format!("https://api.vatsim.net/api/ratings/{}/", cid))
+        .get(format!("https://api.vatsim.net/api/ratings/{cid}/"))
         .send()
         .await?;
     if !response.status().is_success() {
@@ -96,8 +96,7 @@ pub async fn user_ratings(cid: u64) -> Result<UserRatingsSimple, VatsimUtilError
 pub async fn get_ratings_times(cid: u64) -> Result<RatingsTimeData, VatsimUtilError> {
     let response = CLIENT
         .get(format!(
-            "https://api.vatsim.net/api/ratings/{}/rating_times",
-            cid
+            "https://api.vatsim.net/api/ratings/{cid}/rating_times"
         ))
         .send()
         .await?;
@@ -135,9 +134,9 @@ pub async fn get_connections(
     cid: u64,
     page: Option<u64>,
 ) -> Result<PaginatedResponse<ConnectionEntry>, VatsimUtilError> {
-    let mut url = format!("https://api.vatsim.net/api/ratings/{}/connections", cid);
+    let mut url = format!("https://api.vatsim.net/api/ratings/{cid}/connections");
     if let Some(p) = page {
-        let _ = write!(url, "?page={}", p);
+        let _ = write!(url, "?page={p}");
     }
     let response = CLIENT.get(url).send().await?;
     if !response.status().is_success() {
@@ -190,7 +189,7 @@ pub async fn get_atc_sessions(
     start: Option<&str>,
     date: Option<&str>,
 ) -> Result<PaginatedResponse<AtcSessionEntry>, VatsimUtilError> {
-    let mut url = format!("https://api.vatsim.net/api/ratings/{}/atcsessions/", cid);
+    let mut url = format!("https://api.vatsim.net/api/ratings/{cid}/atcsessions/");
     if let Some(spec) = specifier {
         url += spec;
     }
@@ -242,9 +241,9 @@ pub async fn get_flight_plans(
     cid: u64,
     page: Option<u64>,
 ) -> Result<PaginatedResponse<RestFlightPlans>, VatsimUtilError> {
-    let mut url = format!("https://api.vatsim.net/api/ratings/{}/flight_plans", cid);
+    let mut url = format!("https://api.vatsim.net/api/ratings/{cid}/flight_plans");
     if let Some(p) = page {
-        let _ = write!(url, "?page={}", p);
+        let _ = write!(url, "?page={p}");
     }
     let response = CLIENT.get(url).send().await?;
     if !response.status().is_success() {
@@ -354,7 +353,7 @@ pub async fn get_facility_history(
 ) -> Result<PaginatedResponse<AtcSessionEntry>, VatsimUtilError> {
     let mut req = CLIENT.request(
         Method::GET,
-        format!("https://api.vatsim.net/api/facilities/{}", specifier),
+        format!("https://api.vatsim.net/api/facilities/{specifier}"),
     );
     if let Some(p) = page {
         req = req.query(&[("page", p.to_string().as_str())]);
