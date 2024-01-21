@@ -53,6 +53,7 @@ pub struct Pilot {
     pub callsign: String,
     pub server: String,
     pub pilot_rating: i8,
+    pub military_rating: i8,
     pub latitude: f64,
     pub longitude: f64,
     pub altitude: i64,
@@ -142,6 +143,7 @@ pub struct V3ResponseData {
     pub facilities: Vec<ReferenceItem>,
     pub ratings: Vec<ReferenceItem>,
     pub pilot_ratings: Vec<ReferenceNameItem>,
+    pub military_ratings: Vec<ReferenceNameItem>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
