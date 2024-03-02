@@ -16,6 +16,7 @@
     unused_results
 )]
 
+#[cfg(feature = "airports")]
 pub mod distance;
 pub mod errors;
 pub mod live_api;
