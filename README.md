@@ -12,7 +12,7 @@ Utilities to interact with VATSIM data, covering:
 - Several thousand airport decimal latitude/longitude coordinations
 - Various utility functions
 
-This library is not endorsed by VATSIM, VATUSA, or ZLA.
+This library is not endorsed by VATSIM or VATUSA.
 
 ## Installing
 
