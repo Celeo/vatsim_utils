@@ -1,6 +1,6 @@
 # vatsim_utils
 
-[![CI](https://github.com/Celeo/vatsim_utils/workflows/CI/badge.svg?branch=master)](https://github.com/celeo/vatsim_utils/actions?query=workflow%3ACI)
+[![CI](https://github.com/Celeo/vatsim_utils/actions/workflows/ci.yml/badge.svg)](https://github.com/Celeo/vatsim_utils/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/v/vatsim_utils.svg)](https://crates.io/crates/vatsim_utils)
 [![Docs.rs](https://docs.rs/vatsim_utils/badge.svg)](https://docs.rs/vatsim_utils)
 [![License](https://img.shields.io/crates/l/vatsim_utils)](https://github.com/Celeo/vatsim_utils/blob/master/Cargo.toml#L10)
