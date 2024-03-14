@@ -241,8 +241,10 @@ pub struct AtcSessionEntry {
     pub total_handoffs_received: u64,
     pub total_handoffs_refused: u64,
     pub total_squawks_assigned: u64,
-    pub total_cruisealts_modified: u64,
-    pub total_tempalts_modified: u64,
+    #[serde(rename = "total_cruisealts_modified")]
+    pub total_cruise_alts_modified: u64,
+    #[serde(rename = "total_tempalts_modified")]
+    pub total_temp_alts_modified: u64,
     #[serde(rename = "total_scratchpadmods")]
     pub total_scratchpad_mods: u64,
     #[serde(rename = "aircrafttracked")]
@@ -281,9 +283,11 @@ pub struct RestFlightPlans {
     pub arr: String,
     pub alt: String,
     pub altitude: String,
-    pub rmks: String,
+    #[serde(rename = "rmks")]
+    pub remarks: String,
     pub route: String,
-    pub deptime: String,
+    #[serde(rename = "deptime")]
+    pub departure_time: String,
     #[serde(rename = "hrsenroute")]
     pub hrs_enroute: u64,
     #[serde(rename = "minenroute")]
@@ -291,7 +295,7 @@ pub struct RestFlightPlans {
     #[serde(rename = "hrsfuel")]
     pub hrs_fuel: u64,
     #[serde(rename = "minsfuel")]
-    pub min_sfuel: u8,
+    pub mins_fuel: u8,
     pub filed: String,
     #[serde(rename = "assignedsquawk")]
     pub assigned_squawk: String,
