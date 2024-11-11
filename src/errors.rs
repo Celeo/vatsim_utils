@@ -11,8 +11,8 @@ pub enum VatsimUtilError {
     /// calls to external resources and receives an error response code.
     #[error("Invalid HTTP status code received: {0}")]
     InvalidStatusCode(u16),
-    /// Error for if the underlying `reqwest::Client` could not be constructed.
-    #[error("Error constructing HTTP client")]
+    /// Error for if the underlying `reqwest::Client` threw an error.
+    #[error(transparent)]
     ReqwestError(#[from] reqwest::Error),
     /// Error for being unable to parse JSON from anywhere.
     #[error("Failed to serialize/deserialize JSON")]

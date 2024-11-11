@@ -1,6 +1,6 @@
 [package]
 name = "vatsim_utils"
-version = "0.5.1"
+version = "0.5.2"
 edition = "2021"
 authors = ["Celeo <mattboulanger@fastmail.com>"]
 description = "Utilities to interact with VATSIM data"
