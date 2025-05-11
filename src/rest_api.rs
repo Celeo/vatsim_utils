@@ -14,12 +14,11 @@ use crate::{
         RestFlightPlans, UserRatingsSimple,
     },
 };
-use once_cell::sync::Lazy;
 use reqwest::{Client, ClientBuilder, Method};
-use std::fmt::Write;
+use std::{fmt::Write, sync::LazyLock};
 
 /// HTTP client.
-static CLIENT: Lazy<Client> = Lazy::new(|| {
+static CLIENT: LazyLock<Client> = LazyLock::new(|| {
     ClientBuilder::new()
         .user_agent("github.com/celeo/vatsim_utils")
         .build()

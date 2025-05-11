@@ -9,8 +9,7 @@
 //!
 //! [`get_v3_data`]: crate::live_api::Vatsim::get_v3_data
 
-use once_cell::sync::Lazy;
-use std::{collections::HashMap, f64::consts::PI};
+use std::{collections::HashMap, f64::consts::PI, sync::LazyLock};
 
 /// Raw airport data from the CSV file.
 const AIRPORT_DATA: &str = include_str!("airport_data.csv");
@@ -43,7 +42,7 @@ pub struct Airport {
 ///
 /// println!("{}", AIRPORTS.get(0).unwrap().identifier);
 /// ```
-pub static AIRPORTS: Lazy<Vec<Airport>> = Lazy::new(|| {
+pub static AIRPORTS: LazyLock<Vec<Airport>> = LazyLock::new(|| {
     AIRPORT_DATA
         .split('\n')
         .filter(|line| !line.is_empty())
@@ -72,7 +71,7 @@ pub static AIRPORTS: Lazy<Vec<Airport>> = Lazy::new(|| {
 ///
 /// println!("{}", AIRPORTS_MAP.get("KSAN").unwrap().identifier);
 /// ```
-pub static AIRPORTS_MAP: Lazy<HashMap<&'static str, Airport>> = Lazy::new(|| {
+pub static AIRPORTS_MAP: LazyLock<HashMap<&'static str, Airport>> = LazyLock::new(|| {
     let mut m = HashMap::new();
     AIRPORT_DATA
         .split('\n')
