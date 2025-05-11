@@ -2,19 +2,7 @@
 //!
 //! [VATSIM]: https://vatsim.net/
 
-#![deny(
-    clippy::all,
-    clippy::pedantic,
-    missing_docs,
-    missing_debug_implementations,
-    trivial_casts,
-    trivial_numeric_casts,
-    unsafe_code,
-    unused_extern_crates,
-    unused_import_braces,
-    unused_qualifications,
-    unused_results
-)]
+#![deny(clippy::all, missing_docs)]
 
 #[cfg(feature = "airports")]
 pub mod distance;

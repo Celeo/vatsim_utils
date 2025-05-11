@@ -39,7 +39,6 @@ static CLIENT: LazyLock<Client> = LazyLock::new(|| {
 ///
 /// assert_eq!(&url, "https://stats.vatsim.net/stats/1234567890");
 /// ```
-#[must_use]
 pub fn stats_url(cid: u64) -> String {
     format!("https://stats.vatsim.net/stats/{cid}")
 }
