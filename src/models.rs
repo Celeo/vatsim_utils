@@ -226,7 +226,7 @@ pub struct AtcSessionEntry {
     pub connection_id: u64,
     pub start: String,
     pub end: String,
-    pub server: String,
+    pub server: Option<String>,
     pub vatsim_id: String,
     #[serde(rename = "type")]
     pub session_type: u16,
