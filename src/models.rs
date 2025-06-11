@@ -10,7 +10,7 @@
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct StatusData {
     pub v3: Vec<String>,
     pub transceivers: Vec<String>,
@@ -19,14 +19,14 @@ pub struct StatusData {
     pub servers_all: Vec<String>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Status {
     pub data: StatusData,
     pub user: Vec<String>,
     pub metar: Vec<String>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct FlightPlan {
     pub flight_rules: String,
     pub aircraft: String,
@@ -46,7 +46,7 @@ pub struct FlightPlan {
     pub assigned_transponder: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Pilot {
     pub cid: u64,
     pub name: String,
@@ -67,7 +67,7 @@ pub struct Pilot {
     pub last_updated: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Controller {
     pub cid: u64,
     pub name: String,
@@ -82,7 +82,7 @@ pub struct Controller {
     pub logon_time: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct GeneralData {
     pub version: i64,
     pub reload: i64,
@@ -92,7 +92,7 @@ pub struct GeneralData {
     pub unique_users: i64,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Atis {
     pub cid: u64,
     pub name: String,
@@ -108,7 +108,7 @@ pub struct Atis {
     pub logon_time: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Server {
     pub ident: String,
     pub hostname_or_ip: String,
@@ -119,21 +119,21 @@ pub struct Server {
     pub is_sweatbox: bool,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct ReferenceItem {
     pub id: i8,
     pub short: String,
     pub long: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct ReferenceNameItem {
     pub id: i8,
     pub short_name: String,
     pub long_name: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct V3ResponseData {
     pub general: GeneralData,
     pub pilots: Vec<Pilot>,
@@ -146,7 +146,7 @@ pub struct V3ResponseData {
     pub military_ratings: Vec<ReferenceNameItem>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct TransceiverEntry {
     pub id: u16,
     pub frequency: u64,
@@ -160,13 +160,13 @@ pub struct TransceiverEntry {
     pub height_agl_m: f64,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct TransceiverResponseEntry {
     pub callsign: String,
     pub transceivers: Vec<TransceiverEntry>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct UserRatingsSimple {
     id: String,
     rating: i8,
@@ -180,7 +180,7 @@ pub struct UserRatingsSimple {
     last_rating_change: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct RatingsTimeData {
     pub id: f64,
     pub atc: f64,
@@ -198,7 +198,7 @@ pub struct RatingsTimeData {
     pub adm: f64,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct ConnectionEntry {
     pub id: u64,
     pub vatsim_id: String,
@@ -213,7 +213,7 @@ pub struct ConnectionEntry {
 
 /// A paginated response wrapper. Includes a count of items,
 /// potential links to next/previous pages, and a list of results.
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct PaginatedResponse<T> {
     pub count: u64,
     pub next: Option<String>,
@@ -221,7 +221,7 @@ pub struct PaginatedResponse<T> {
     pub results: Vec<T>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct AtcSessionEntry {
     pub connection_id: u64,
     pub start: String,
@@ -269,7 +269,7 @@ pub struct AtcSessionEntry {
     pub scratchpad_mods: u64,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct RestFlightPlans {
     pub id: u64,
     pub connection_id: u64,
@@ -305,14 +305,14 @@ pub struct RestFlightPlans {
     pub modified_by_callsign: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Region {
     pub id: String,
     pub name: String,
     pub director: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Facility {
     pub id: String,
     pub start: String,
