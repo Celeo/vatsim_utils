@@ -26,3 +26,4 @@ thiserror = "2.0.17"
 [features]
 default = ["airports"]
 airports = []
+rustls-tls = ["reqwest/rustls-tls"]
