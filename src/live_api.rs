@@ -25,7 +25,7 @@ use crate::{
     models::{Status, StatusData, TransceiverResponseEntry, V3ResponseData},
 };
 use log::debug;
-use rand::seq::SliceRandom;
+use rand::seq::IndexedRandom;
 use reqwest::{Client, ClientBuilder};
 
 /// Initial VATSIM API requests are made to this endpoint.
@@ -95,12 +95,12 @@ impl Vatsim {
         let data: StatusData = (response.json::<Status>().await?).data;
         let v3_url = data
             .v3
-            .choose(&mut rand::thread_rng())
+            .choose(&mut rand::rng())
             .expect("No VATSIM V3 API URLs returned")
             .clone();
         let transceivers_url = data
             .transceivers
-            .choose(&mut rand::thread_rng())
+            .choose(&mut rand::rng())
             .expect("No VATSIM transceivers API URLs returned")
             .clone();
         debug!("V3 URL: {v3_url}, transceiver URL: {transceivers_url}");
