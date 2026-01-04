@@ -4,6 +4,7 @@
 
 #![deny(clippy::all, missing_docs)]
 
+pub mod crc;
 #[cfg(feature = "airports")]
 pub mod distance;
 pub mod errors;

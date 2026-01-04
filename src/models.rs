@@ -319,3 +319,92 @@ pub struct Facility {
     pub callsign: String,
     pub rating: i8,
 }
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeedEramData {
+    #[serde(rename = "sectorId")]
+    sector_id: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeedStarsData {
+    pub subset: i64,
+    #[serde(rename = "sectorId")]
+    pub sector_id: String,
+    #[serde(rename = "areaId")]
+    pub area_id: String,
+    #[serde(rename = "assumedTcps")]
+    pub assumed_tcps: Vec<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeedPosition {
+    #[serde(rename = "facilityId")]
+    pub facility_id: String,
+    #[serde(rename = "facilityName")]
+    pub facility_name: String,
+    #[serde(rename = "positionId")]
+    pub position_id: String,
+    #[serde(rename = "positionName")]
+    pub position_name: String,
+    #[serde(rename = "positionType")]
+    pub position_type: String,
+    #[serde(rename = "radioName")]
+    pub radio_name: String,
+    #[serde(rename = "defaultCallsign")]
+    pub default_callsign: String,
+    pub frequency: i64,
+    #[serde(rename = "isPrimary")]
+    pub is_primary: bool,
+    #[serde(rename = "isActive")]
+    pub is_active: bool,
+    #[serde(rename = "eramData")]
+    pub eram_data: Option<DataFeedEramData>,
+    #[serde(rename = "starsData")]
+    pub stars_data: Option<DataFeedStarsData>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeedVatsimData {
+    pub cid: String,
+    #[serde(rename = "realName")]
+    pub real_name: String,
+    #[serde(rename = "controllerInfo")]
+    pub controller_info: String,
+    #[serde(rename = "userRating")]
+    pub user_rating: String,
+    #[serde(rename = "requestedRating")]
+    pub requested_rating: String,
+    pub callsign: String,
+    #[serde(rename = "facilityType")]
+    pub facility_type: String,
+    #[serde(rename = "primaryFrequency")]
+    pub primary_frequency: i64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeedController {
+    #[serde(rename = "artccId")]
+    pub artcc_id: String,
+    #[serde(rename = "primaryFacilityId")]
+    pub primary_facility_id: String,
+    #[serde(rename = "primaryPositionId")]
+    pub primary_position_id: String,
+    pub role: String,
+    pub positions: Vec<DataFeedPosition>,
+    #[serde(rename = "isActive")]
+    pub is_active: bool,
+    #[serde(rename = "isObserver")]
+    pub is_observer: bool,
+    #[serde(rename = "loginTime")]
+    pub login_time: String,
+    #[serde(rename = "vatsimData")]
+    pub vatsim_data: DataFeedVatsimData,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct DataFeed {
+    #[serde(rename = "updatedAt")]
+    pub updated_at: String,
+    pub controllers: Vec<DataFeedController>,
+}
